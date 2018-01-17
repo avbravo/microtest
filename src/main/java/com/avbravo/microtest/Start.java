@@ -5,11 +5,13 @@
  */
 package com.avbravo.microtest;
 
+import com.avbravo.microtest.test.ColorTest;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 
 /**
  *
@@ -22,6 +24,9 @@ public class Start implements Serializable{
 @EJB
  
 StartupBean ejb;
+
+@Inject 
+ColorTest colorTest;
  
     /**
      * Creates a new instance of Start
@@ -38,10 +43,17 @@ System.out.println("State is "+ejb.getState());
         
     }
     public String run(){
-        System.out.println("=======================================");
+        try {
+            System.out.println("=======================================");
         System.out.println("---Run()");
         System.out.println("State is "+ejb.getState());
         System.out.println("=======================================");
+        
+        colorTest.findAll();
+        } catch (Exception e) {
+            System.out.println("run() "+e.getLocalizedMessage());
+        }
+        
         
 
         return "";
