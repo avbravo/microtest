@@ -7,7 +7,7 @@ package com.avbravo.microtest;
 
 import com.avbravo.ejbjmoordb.pojos.UserInfo;
 import com.avbravo.ejbspard.entity.Color;
-import com.avbravo.ejbspard.repository.ColorRepository;
+import com.avbravo.ejbspard.repository.PaisRepository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -24,25 +24,34 @@ import javax.inject.Inject;
 @Startup
 @Singleton
 @DependsOn("StartupBean")
-public class PostStartupBean {
+public class PaisTest {
 //    @Inject
 //    ColorTest colorTest;
-//    @Inject
-//    ColorRepository colorRepository;
+    @Inject
+    PaisRepository paisRepository;
 
     @PostConstruct
     void init() {
         System.out.println("--------------------------------------->");
-        System.out.println("estoy en init() de PostStartupBean ()");
+        System.out.println("estoy en init() de PaisTest ()");
         System.out.println("--------------------------------------->");
         System.out.println("*********************************************");
+        System.out.println("invocare al findAll()");
+       
+       if(paisRepository.findAll().size()==0){
+           System.out.println("--->tiene paiss");     
+       }else{
+           System.out.println("--->no tiene paiss");
+       }
+      
         System.out.println("*********************************************");
+
     }
 
     @PreDestroy
     public void destroy() {
         System.out.println("======================================");
-        System.out.println("Destroying configuration -- ");
+        System.out.println("Destroying PaisTest -- ");
         System.out.println("======================================");
     }
 }

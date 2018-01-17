@@ -5,7 +5,7 @@
  */
 package com.avbravo.microtest;
 
-import com.avbravo.microtest.test.ColorTest;
+
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -49,7 +49,7 @@ System.out.println("State is "+ejb.getState());
         System.out.println("State is "+ejb.getState());
         System.out.println("=======================================");
         
-        colorTest.findAll();
+      
         } catch (Exception e) {
             System.out.println("run() "+e.getLocalizedMessage());
         }

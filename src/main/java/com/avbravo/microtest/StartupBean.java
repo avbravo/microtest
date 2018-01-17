@@ -20,6 +20,7 @@ import javax.ejb.Startup;
 public class StartupBean {
     public enum States {BEFORESTARTED, STARTED, PAUSED, SHUTTINGDOWN};
     private States state;
+    private String clase;
     @PostConstruct
     public void initialize() {
         state = States.BEFORESTARTED;

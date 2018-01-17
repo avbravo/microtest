@@ -24,25 +24,42 @@ import javax.inject.Inject;
 @Startup
 @Singleton
 @DependsOn("StartupBean")
-public class PostStartupBean {
+public class ColorTest {
 //    @Inject
 //    ColorTest colorTest;
-//    @Inject
-//    ColorRepository colorRepository;
+    @Inject
+    ColorRepository colorRepository;
 
     @PostConstruct
     void init() {
         System.out.println("--------------------------------------->");
-        System.out.println("estoy en init() de PostStartupBean ()");
+        System.out.println("estoy en init() de ColorTest ()");
         System.out.println("--------------------------------------->");
         System.out.println("*********************************************");
+        System.out.println("invocare al findAll()");
+        Color color = new Color();
+        color.setActivo("si");
+        color.setAutoincrementable(15);
+        color.setIdcolor("elsa");
+      List<UserInfo> list  = new ArrayList<>();
+        color.setUserInfo(list);
+        if(colorRepository.save(color)){
+            System.out.println("Guardado");
+        }else{
+            System.out.println("No guardado "+colorRepository.getException());
+        }
+        for(Color c:colorRepository.findAll()){
+            System.out.println("color: "+c.getIdcolor());
+        }
         System.out.println("*********************************************");
+//        colorTest.findAll();
+        // Here init your resources
     }
 
     @PreDestroy
     public void destroy() {
         System.out.println("======================================");
-        System.out.println("Destroying configuration -- ");
+        System.out.println("Destroying ColorTest -- ");
         System.out.println("======================================");
     }
 }

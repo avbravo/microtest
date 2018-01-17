@@ -5,11 +5,9 @@
  */
 package com.avbravo.microtest;
 
-import com.avbravo.ejbjmoordb.pojos.UserInfo;
-import com.avbravo.ejbspard.entity.Color;
-import com.avbravo.ejbspard.repository.ColorRepository;
-import java.util.ArrayList;
-import java.util.List;
+import com.avbravo.ejbspard.repository.BodegaRepository;
+import static com.avbravo.microtest.util.UnitTest.assertEquals;
+import com.avbravo.microtest.util.UnitReport;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.DependsOn;
@@ -24,25 +22,35 @@ import javax.inject.Inject;
 @Startup
 @Singleton
 @DependsOn("StartupBean")
-public class PostStartupBean {
-//    @Inject
-//    ColorTest colorTest;
-//    @Inject
-//    ColorRepository colorRepository;
+public class BodegaTest {
+    @Inject
+UnitReport htmlGenerator;
+    @Inject
+    BodegaRepository bodegaRepository;
 
     @PostConstruct
     void init() {
         System.out.println("--------------------------------------->");
-        System.out.println("estoy en init() de PostStartupBean ()");
+        System.out.println("estoy en init() de BodegaTest ()");
         System.out.println("--------------------------------------->");
         System.out.println("*********************************************");
+        System.out.println("invocare al findAll()");
+       
+        assertEquals(1,bodegaRepository.findAll().size());
+//                if(bodegaRepository.findAll().size()==0){
+//           System.out.println("--->tiene bodegas");     
+//       }else{
+//           System.out.println("--->no tiene bodegas");
+//       }
+      
         System.out.println("*********************************************");
+htmlGenerator.generar();
     }
 
     @PreDestroy
     public void destroy() {
         System.out.println("======================================");
-        System.out.println("Destroying configuration -- ");
+        System.out.println("Destroying BodegaTest -- ");
         System.out.println("======================================");
     }
 }
