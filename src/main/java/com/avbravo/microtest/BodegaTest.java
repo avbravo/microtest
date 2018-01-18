@@ -42,8 +42,6 @@ UnitTest unitTest;
 
     @PreDestroy
     public void destroy() {
-        System.out.println("======================================");
-        System.out.println("Destroying BodegaTest -- ");
-        System.out.println("======================================");
+       
     }
 }

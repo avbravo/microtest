@@ -6,6 +6,7 @@
 package com.avbravo.microtest;
 
 import com.avbravo.ejbspard.repository.PaisRepository;
+import com.avbravo.jmoordbunit.Test;
 import com.avbravo.jmoordbunit.TestEnvironment;
 import com.avbravo.jmoordbunit.util.UnitTest;
 import javax.annotation.PostConstruct;
@@ -30,22 +31,20 @@ UnitTest unitTest;
 
     @PostConstruct
     void init() {
-        unitTest.start("PaisTest");
-    
-       if(paisRepository.findAll().size()==0){
-           System.out.println("--->tiene paiss");     
-       }else{
-           System.out.println("--->no tiene paiss");
-       }
-      
-        System.out.println("*********************************************");
+        unitTest.start("PaisTest");   
 
     }
 
     @PreDestroy
     public void destroy() {
-        System.out.println("======================================");
-        System.out.println("Destroying PaisTest -- ");
-        System.out.println("======================================");
+      
     }
+    @Test
+    public String findAll(){
+        unitTest.assertEquals(0, paisRepository.findAll().size(),"No tiene paises");
+        
+      
+         return "";
+    }
+            
 }

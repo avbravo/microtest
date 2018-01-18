@@ -36,6 +36,8 @@ public class ColorTest {
     @PostConstruct
     void init() {
         unitTest.start("ColorTest");
+        save();
+        findAll();
 
 //        colorTest.findAll();
         // Here init your resources
@@ -77,8 +79,11 @@ public class ColorTest {
 
     @PreDestroy
     public void destroy() {
-        System.out.println("======================================");
-        System.out.println("Destroying ColorTest -- ");
-        System.out.println("======================================");
+      
+    }
+    
+    @Test
+    public void failure(){
+        unitTest.fail("Fallo intencional");
     }
 }

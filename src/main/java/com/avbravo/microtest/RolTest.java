@@ -49,8 +49,6 @@ UnitTest unitTest;
      */
     @PreDestroy
     public void destroy() {
-        System.out.println("======================================");
-        System.out.println("Destroying RolTest -- ");
-        System.out.println("======================================");
+       
     }
 }
