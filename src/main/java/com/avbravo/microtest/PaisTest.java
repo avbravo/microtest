@@ -6,9 +6,9 @@
 package com.avbravo.microtest;
 
 import com.avbravo.ejbspard.repository.PaisRepository;
-import com.avbravo.jmoordbunit.Test;
+import com.avbravo.jmoordbunit.anotation.Test;
 import com.avbravo.jmoordbunit.TestEnvironment;
-import com.avbravo.jmoordbunit.util.UnitTest;
+import com.avbravo.jmoordbunit.test.UnitTest;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.DependsOn;
@@ -23,6 +23,7 @@ import javax.inject.Inject;
 @Startup
 @Singleton
 @DependsOn("TestEnvironment")
+
 public class PaisTest{
 @Inject 
 UnitTest unitTest;
@@ -31,7 +32,7 @@ UnitTest unitTest;
 
     @PostConstruct
     void init() {
-        unitTest.start("PaisTest");   
+        unitTest.start(PaisTest.class);   
 
     }
 

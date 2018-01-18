@@ -7,8 +7,8 @@ package com.avbravo.microtest;
 
 import com.avbravo.ejbspard.entity.Rol;
 import com.avbravo.ejbspard.repository.RolRepository;
-import com.avbravo.jmoordbunit.Test;
-import com.avbravo.jmoordbunit.util.UnitTest;
+import com.avbravo.jmoordbunit.anotation.Test;
+import com.avbravo.jmoordbunit.test.UnitTest;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.DependsOn;
@@ -33,7 +33,7 @@ UnitTest unitTest;
 
     @PostConstruct
     public void init() {
-       unitTest.startTest("RolTest");
+       unitTest.start(RolTest.class);
       
 
      

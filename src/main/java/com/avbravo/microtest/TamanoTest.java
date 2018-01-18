@@ -6,9 +6,8 @@
 package com.avbravo.microtest;
 
 import com.avbravo.ejbjmoordb.pojos.UserInfo;
-import com.avbravo.ejbspard.entity.Color;
-import com.avbravo.ejbspard.repository.ColorRepository;
-import com.avbravo.jmoordbunit.anotation.Report;
+import com.avbravo.ejbspard.entity.Tamano;
+import com.avbravo.ejbspard.repository.TamanoRepository;
 import com.avbravo.jmoordbunit.anotation.Test;
 import com.avbravo.jmoordbunit.test.UnitTest;
 import java.util.ArrayList;
@@ -27,33 +26,37 @@ import javax.inject.Inject;
 @Startup
 @Singleton
 @DependsOn("TestEnvironment")
-public class ColorTest {
+@Test(name = "TamanoTes")
+public class TamanoTest {
 
     @Inject
     UnitTest unitTest;
     @Inject
-    ColorRepository colorRepository;
+    TamanoRepository tamanoRepository;
 
     @PostConstruct
     void init() {
-        unitTest.start(ColorTest.class);
+        unitTest.start(TamanoTest.class);
         save();
         findAll();
+        failure();
 
+//        tamanoTest.findAll();
+        // Here init your resources
     }
 
     @Test
     public String save() {
         try {
             //Mock
-            Color color = new Color();
-            color.setActivo("si");
-            color.setAutoincrementable(15);
-            color.setIdcolor("elsa");
+            Tamano tamano = new Tamano();
+            tamano.setActivo("si");           
+            tamano.setIdtamano("elsa");
             List<UserInfo> list = new ArrayList<>();
-            color.setUserInfo(list);
+            tamano.setUserInfo(list);
+
             Boolean expResult = true;
-            unitTest.assertEquals(true, colorRepository.save(color));
+            unitTest.assertEquals(true, tamanoRepository.save(tamano),"metodo save()");
 
         } catch (Exception e) {
             System.out.println("save() " + e.getLocalizedMessage());
@@ -65,9 +68,10 @@ public class ColorTest {
     @Test
     public String findAll() {
         try {
-            for (Color c : colorRepository.findAll()) {
-                System.out.println("color: " + c.getIdcolor());
-            }
+           unitTest.assertEquals(5,tamanoRepository.findAll());
+//            for (Tamano c : tamanoRepository.findAll()) {
+//                System.out.println("tamano: " + c.getIdtamano());
+//            }
          
         } catch (Exception e) {
             System.out.println("findAll() " + e.getLocalizedMessage());
