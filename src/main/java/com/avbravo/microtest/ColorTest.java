@@ -8,6 +8,8 @@ package com.avbravo.microtest;
 import com.avbravo.ejbjmoordb.pojos.UserInfo;
 import com.avbravo.ejbspard.entity.Color;
 import com.avbravo.ejbspard.repository.ColorRepository;
+import com.avbravo.jmoordbunit.Test;
+import com.avbravo.jmoordbunit.util.UnitTest;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -23,37 +25,54 @@ import javax.inject.Inject;
  */
 @Startup
 @Singleton
-@DependsOn("StartupBean")
+@DependsOn("TestEnvironment")
 public class ColorTest {
-//    @Inject
-//    ColorTest colorTest;
+
+    @Inject
+    UnitTest unitTest;
     @Inject
     ColorRepository colorRepository;
 
     @PostConstruct
     void init() {
-        System.out.println("--------------------------------------->");
-        System.out.println("estoy en init() de ColorTest ()");
-        System.out.println("--------------------------------------->");
-        System.out.println("*********************************************");
-        System.out.println("invocare al findAll()");
-        Color color = new Color();
-        color.setActivo("si");
-        color.setAutoincrementable(15);
-        color.setIdcolor("elsa");
-      List<UserInfo> list  = new ArrayList<>();
-        color.setUserInfo(list);
-        if(colorRepository.save(color)){
-            System.out.println("Guardado");
-        }else{
-            System.out.println("No guardado "+colorRepository.getException());
-        }
-        for(Color c:colorRepository.findAll()){
-            System.out.println("color: "+c.getIdcolor());
-        }
-        System.out.println("*********************************************");
+        unitTest.start("ColorTest");
+
 //        colorTest.findAll();
         // Here init your resources
+    }
+
+    @Test
+    public String save() {
+        try {
+            //Mock
+            Color color = new Color();
+            color.setActivo("si");
+            color.setAutoincrementable(15);
+            color.setIdcolor("elsa");
+            List<UserInfo> list = new ArrayList<>();
+            color.setUserInfo(list);
+
+            Boolean expResult = true;
+            unitTest.assertEquals(true, colorRepository.save(color));
+
+        } catch (Exception e) {
+            System.out.println("save() " + e.getLocalizedMessage());
+        }
+
+        return "";
+    }
+
+    @Test
+    public String findAll() {
+        try {
+            for (Color c : colorRepository.findAll()) {
+                System.out.println("color: " + c.getIdcolor());
+            }
+         
+        } catch (Exception e) {
+            System.out.println("findAll() " + e.getLocalizedMessage());
+        }
+        return "";
     }
 
     @PreDestroy

@@ -5,11 +5,9 @@
  */
 package com.avbravo.microtest;
 
-import com.avbravo.ejbjmoordb.pojos.UserInfo;
-import com.avbravo.ejbspard.entity.Color;
 import com.avbravo.ejbspard.repository.PaisRepository;
-import java.util.ArrayList;
-import java.util.List;
+import com.avbravo.jmoordbunit.TestEnvironment;
+import com.avbravo.jmoordbunit.util.UnitTest;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.DependsOn;
@@ -23,21 +21,17 @@ import javax.inject.Inject;
  */
 @Startup
 @Singleton
-@DependsOn("StartupBean")
-public class PaisTest {
-//    @Inject
-//    ColorTest colorTest;
+@DependsOn("TestEnvironment")
+public class PaisTest{
+@Inject 
+UnitTest unitTest;
     @Inject
     PaisRepository paisRepository;
 
     @PostConstruct
     void init() {
-        System.out.println("--------------------------------------->");
-        System.out.println("estoy en init() de PaisTest ()");
-        System.out.println("--------------------------------------->");
-        System.out.println("*********************************************");
-        System.out.println("invocare al findAll()");
-       
+        unitTest.start("PaisTest");
+    
        if(paisRepository.findAll().size()==0){
            System.out.println("--->tiene paiss");     
        }else{

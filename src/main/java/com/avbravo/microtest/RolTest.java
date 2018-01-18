@@ -5,14 +5,14 @@
  */
 package com.avbravo.microtest;
 
-import com.avbravo.ejbjmoordb.pojos.UserInfo;
-import com.avbravo.ejbspard.entity.Color;
-import com.avbravo.ejbspard.repository.ColorRepository;
-import java.util.ArrayList;
-import java.util.List;
+import com.avbravo.ejbspard.entity.Rol;
+import com.avbravo.ejbspard.repository.RolRepository;
+import com.avbravo.jmoordbunit.Test;
+import com.avbravo.jmoordbunit.util.UnitTest;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.DependsOn;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
@@ -23,26 +23,34 @@ import javax.inject.Inject;
  */
 @Startup
 @Singleton
-@DependsOn("StartupBean")
-public class PostStartupBean {
-//    @Inject
-//    ColorTest colorTest;
-//    @Inject
-//    ColorRepository colorRepository;
+@DependsOn("TestEnvironment")
+@Test(name = "RolTest")  
+public class RolTest{
+@Inject 
+UnitTest unitTest;
+     @Inject
+    RolRepository rolRepository;
 
     @PostConstruct
-    void init() {
-        System.out.println("--------------------------------------->");
-        System.out.println("estoy en init() de PostStartupBean ()");
-        System.out.println("--------------------------------------->");
+    public void init() {
+       unitTest.startTest("RolTest");
+      
+
+     
+        for(Rol c:rolRepository.findAll()){
+            System.out.println("rol: "+c.getIdrol());
+        }
         System.out.println("*********************************************");
-        System.out.println("*********************************************");
+
     }
 
+    /**
+     *
+     */
     @PreDestroy
     public void destroy() {
         System.out.println("======================================");
-        System.out.println("Destroying configuration -- ");
+        System.out.println("Destroying RolTest -- ");
         System.out.println("======================================");
     }
 }

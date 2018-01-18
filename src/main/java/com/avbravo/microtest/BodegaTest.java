@@ -6,8 +6,8 @@
 package com.avbravo.microtest;
 
 import com.avbravo.ejbspard.repository.BodegaRepository;
-import static com.avbravo.microtest.util.UnitTest.assertEquals;
-import com.avbravo.microtest.util.UnitReport;
+import com.avbravo.jmoordbunit.util.UnitTest;
+//import static com.avbravo.jmoordbunit.util.UnitTest.assertEquals;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.DependsOn;
@@ -21,30 +21,23 @@ import javax.inject.Inject;
  */
 @Startup
 @Singleton
-@DependsOn("StartupBean")
+@DependsOn("TestEnvironment")
 public class BodegaTest {
-    @Inject
-UnitReport htmlGenerator;
+@Inject 
+UnitTest unitTest;
     @Inject
     BodegaRepository bodegaRepository;
 
     @PostConstruct
     void init() {
-        System.out.println("--------------------------------------->");
-        System.out.println("estoy en init() de BodegaTest ()");
-        System.out.println("--------------------------------------->");
-        System.out.println("*********************************************");
-        System.out.println("invocare al findAll()");
+         unitTest.start("BodegaTest");
        
-        assertEquals(1,bodegaRepository.findAll().size());
-//                if(bodegaRepository.findAll().size()==0){
-//           System.out.println("--->tiene bodegas");     
-//       }else{
-//           System.out.println("--->no tiene bodegas");
-//       }
+       
+        unitTest.assertEquals(1,bodegaRepository.findAll().size());
+
       
         System.out.println("*********************************************");
-htmlGenerator.generar();
+//htmlGenerator.generar();
     }
 
     @PreDestroy
