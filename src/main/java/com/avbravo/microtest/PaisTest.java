@@ -33,16 +33,18 @@ UnitTest unitTest;
     @PostConstruct
     void init() {
         unitTest.start(PaisTest.class);   
+        findAll();
 
     }
 
     @PreDestroy
     public void destroy() {
+          unitTest.end(PaisTest.class);
       
     }
     @Test
     public String findAll(){
-        unitTest.assertEquals(0, paisRepository.findAll().size(),"No tiene paises");
+        unitTest.assertNotEquals(0, paisRepository.findAll().size(),"No tiene paises");
         
       
          return "";

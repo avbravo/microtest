@@ -34,21 +34,28 @@ UnitTest unitTest;
     @PostConstruct
     public void init() {
        unitTest.start(RolTest.class);
-      
+       findAll();
+      unitTest.skipper("delete");
+      unitTest.skipper("save");
 
      
+        
+    }
+
+    @Test
+    public void findAll(){
         for(Rol c:rolRepository.findAll()){
             System.out.println("rol: "+c.getIdrol());
         }
-        System.out.println("*********************************************");
+        unitTest.assertEquals(5,rolRepository.findAll().size());
 
     }
-
     /**
      *
      */
     @PreDestroy
     public void destroy() {
+          unitTest.end(RolTest.class);
        
     }
 }

@@ -40,6 +40,7 @@ public class TamanoTest {
         save();
         findAll();
         failure();
+        unitTest.skipper("save()");
 
 //        tamanoTest.findAll();
         // Here init your resources
@@ -69,10 +70,7 @@ public class TamanoTest {
     public String findAll() {
         try {
            unitTest.assertEquals(5,tamanoRepository.findAll());
-//            for (Tamano c : tamanoRepository.findAll()) {
-//                System.out.println("tamano: " + c.getIdtamano());
-//            }
-         
+
         } catch (Exception e) {
             System.out.println("findAll() " + e.getLocalizedMessage());
         }
@@ -81,7 +79,7 @@ public class TamanoTest {
 
     @PreDestroy
     public void destroy() {
-      
+        unitTest.end(TamanoTest.class);
     }
     
     @Test

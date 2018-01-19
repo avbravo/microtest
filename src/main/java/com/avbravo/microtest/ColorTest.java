@@ -39,6 +39,8 @@ public class ColorTest {
         unitTest.start(ColorTest.class);
         save();
         findAll();
+        failure();
+        unitTest.skipper("delete()");
 
     }
 
@@ -77,7 +79,7 @@ public class ColorTest {
 
     @PreDestroy
     public void destroy() {
-      
+        unitTest.end(ColorTest.class);
     }
     
     @Test

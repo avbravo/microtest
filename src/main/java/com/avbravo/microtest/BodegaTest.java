@@ -33,32 +33,17 @@ UnitTest unitTest;
 
     @PostConstruct
     void init() {
-      //   unitTest.start("BodegaTest");
        unitTest.start(BodegaTest.class);
-       
-        unitTest.assertEquals(1,bodegaRepository.findAll().size());
+       findAll();
         
-        
-//      Path resourceDirectory = Paths.get("src","test","resources");
-//        System.out.println(" "+ resourceDirectory.toAbsolutePath());
-        
-//         URL location =  this.getClass().getResource("/reports");
-//    String FullPath = location.getPath();
-//        System.out.println("new path -->"+FullPath);
-//        URL resource = BodegaTest.class.getResource("abc");
-//    try {
-//        System.out.println("Path---> "+ Paths.get(resource.toURI()).toFile().getAbsolutePath());
-//        
-//    } catch (URISyntaxException ex) {
-//        Logger.getLogger(BodegaTest.class.getName()).log(Level.SEVERE, null, ex);
-//    }
-//         unitTest.path();
-        System.out.println("*********************************************");
-//htmlGenerator.generar();
     }
 
+    private void findAll(){
+        unitTest.assertNotEquals(0,bodegaRepository.findAll().size());
+  
+    }
     @PreDestroy
     public void destroy() {
-       
+       unitTest.end(BodegaTest.class);
     }
 }
