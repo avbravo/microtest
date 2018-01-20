@@ -52,7 +52,7 @@ public class TamanoTest {
             //Mock
             Tamano tamano = new Tamano();
             tamano.setActivo("si");           
-            tamano.setIdtamano("elsa");
+            tamano.setIdtamano("prueba");
             List<UserInfo> list = new ArrayList<>();
             tamano.setUserInfo(list);
 
