@@ -39,7 +39,7 @@ UnitTest unitTest;
     }
 
     private void findAll(){
-        unitTest.assertNotEquals(0,bodegaRepository.findAll().size());
+        unitTest.assertNotEquals("findAll",0,bodegaRepository.findAll().size());
   
     }
     @PreDestroy

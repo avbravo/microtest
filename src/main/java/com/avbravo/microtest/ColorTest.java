@@ -55,7 +55,7 @@ public class ColorTest {
             List<UserInfo> list = new ArrayList<>();
             color.setUserInfo(list);
             Boolean expResult = true;
-            unitTest.assertEquals(true, colorRepository.save(color));
+            unitTest.assertEquals("save",true, colorRepository.save(color));
 
         } catch (Exception e) {
             System.out.println("save() " + e.getLocalizedMessage());
@@ -70,7 +70,7 @@ public class ColorTest {
             for (Color c : colorRepository.findAll()) {
                 System.out.println("color: " + c.getIdcolor());
             }
-         
+         unitTest.assertEquals("findAll",1, colorRepository.findAll().size());
         } catch (Exception e) {
             System.out.println("findAll() " + e.getLocalizedMessage());
         }
@@ -84,6 +84,6 @@ public class ColorTest {
     
     @Test
     public void failure(){
-        unitTest.fail("Fallo intencional");
+        unitTest.fail("failure","Fallo intencional");
     }
 }

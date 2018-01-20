@@ -47,7 +47,7 @@ UnitTest unitTest;
         for(Rol c:rolRepository.findAll()){
             System.out.println("rol: "+c.getIdrol());
         }
-        unitTest.assertEquals(5,rolRepository.findAll().size());
+        unitTest.assertEquals("save",5,rolRepository.findAll().size());
 
     }
     /**

@@ -57,7 +57,7 @@ public class TamanoTest {
             tamano.setUserInfo(list);
 
             Boolean expResult = true;
-            unitTest.assertEquals(true, tamanoRepository.save(tamano),"metodo save()");
+            unitTest.assertEquals("save",true, tamanoRepository.save(tamano),"metodo save()");
 
         } catch (Exception e) {
             System.out.println("save() " + e.getLocalizedMessage());
@@ -69,7 +69,7 @@ public class TamanoTest {
     @Test
     public String findAll() {
         try {
-           unitTest.assertEquals(5,tamanoRepository.findAll());
+           unitTest.assertEquals("findAll",5,tamanoRepository.findAll());
 
         } catch (Exception e) {
             System.out.println("findAll() " + e.getLocalizedMessage());
@@ -84,6 +84,6 @@ public class TamanoTest {
     
     @Test
     public void failure(){
-        unitTest.fail("Fallo intencional");
+        unitTest.fail("failure","Fallo intencional");
     }
 }

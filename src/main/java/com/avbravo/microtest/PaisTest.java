@@ -44,7 +44,7 @@ UnitTest unitTest;
     }
     @Test
     public String findAll(){
-        unitTest.assertNotEquals(0, paisRepository.findAll().size(),"No tiene paises");
+        unitTest.assertNotEquals("findAll",0, paisRepository.findAll().size(),"No tiene paises");
         
       
          return "";
