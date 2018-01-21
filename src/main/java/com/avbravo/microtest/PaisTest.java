@@ -34,12 +34,14 @@ UnitTest unitTest;
     void init() {
         unitTest.start(PaisTest.class);   
         findAll();
+        
+              unitTest.end(PaisTest.class);
 
     }
 
     @PreDestroy
     public void destroy() {
-          unitTest.end(PaisTest.class);
+    
       
     }
     @Test

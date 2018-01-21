@@ -37,7 +37,7 @@ UnitTest unitTest;
        findAll();
       unitTest.skipper("delete");
       unitTest.skipper("save");
-
+   unitTest.end(RolTest.class);
      
         
     }
@@ -55,7 +55,7 @@ UnitTest unitTest;
      */
     @PreDestroy
     public void destroy() {
-          unitTest.end(RolTest.class);
+       
        
     }
 }

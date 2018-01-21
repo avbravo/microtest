@@ -8,10 +8,13 @@ package com.avbravo.microtest;
 import com.avbravo.ejbjmoordb.pojos.UserInfo;
 import com.avbravo.ejbspard.entity.Color;
 import com.avbravo.ejbspard.repository.ColorRepository;
-import com.avbravo.jmoordbunit.anotation.Report;
 import com.avbravo.jmoordbunit.anotation.Test;
+import com.avbravo.jmoordbunit.pojos.ColView;
+import com.avbravo.jmoordbunit.pojos.RowView;
 import com.avbravo.jmoordbunit.test.UnitTest;
+import com.avbravo.jmoordbunit.view.UnitView;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -32,22 +35,26 @@ public class ColorTest {
     @Inject
     UnitTest unitTest;
     @Inject
+    UnitView unitView;
+    @Inject
     ColorRepository colorRepository;
 
     @PostConstruct
     void init() {
         unitTest.start(ColorTest.class);
+      unitView.start(ColorTest.class);
         save();
         findAll();
         failure();
         unitTest.skipper("delete()");
-
+        unitTest.end(ColorTest.class);
     }
 
     @Test
     public String save() {
         try {
-            //Mock
+//            unitView.message("Testeando save()");
+//Mock
             Color color = new Color();
             color.setActivo("si");
             color.setAutoincrementable(15);
@@ -55,7 +62,7 @@ public class ColorTest {
             List<UserInfo> list = new ArrayList<>();
             color.setUserInfo(list);
             Boolean expResult = true;
-            unitTest.assertEquals("save",true, colorRepository.save(color));
+            unitTest.assertEquals("save", true, colorRepository.save(color));
 
         } catch (Exception e) {
             System.out.println("save() " + e.getLocalizedMessage());
@@ -67,10 +74,20 @@ public class ColorTest {
     @Test
     public String findAll() {
         try {
-            for (Color c : colorRepository.findAll()) {
-                System.out.println("color: " + c.getIdcolor());
+            //titulo de la tabla
+            List<Color> colorList = colorRepository.findAll();
+            if (colorList.isEmpty()) {
+               unitView.message("no hay colores en en findAll()");
+            } else {
+               unitView.tableHeader(Arrays.asList(new RowView("idcolor"), new RowView("activo")));
+                for (Color c : colorRepository.findAll()) {
+                    unitView.tableCol(Arrays.asList(new ColView(c.getIdcolor()), new ColView(c.getActivo())));
+                 System.out.println("color: " + c.getIdcolor());
+                }
+               unitView.tableClose();
             }
-         unitTest.assertEquals("findAll",1, colorRepository.findAll().size());
+
+            unitTest.assertEquals("findAll", 1, colorList.size());
         } catch (Exception e) {
             System.out.println("findAll() " + e.getLocalizedMessage());
         }
@@ -79,11 +96,11 @@ public class ColorTest {
 
     @PreDestroy
     public void destroy() {
-        unitTest.end(ColorTest.class);
+
     }
-    
+
     @Test
-    public void failure(){
-        unitTest.fail("failure","Fallo intencional");
+    public void failure() {
+        unitTest.fail("failure", "Fallo intencional");
     }
 }

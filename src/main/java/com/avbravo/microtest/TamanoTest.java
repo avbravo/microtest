@@ -41,6 +41,7 @@ public class TamanoTest {
         findAll();
         failure();
         unitTest.skipper("save()");
+         unitTest.end(TamanoTest.class);
 
 //        tamanoTest.findAll();
         // Here init your resources
@@ -79,7 +80,7 @@ public class TamanoTest {
 
     @PreDestroy
     public void destroy() {
-        unitTest.end(TamanoTest.class);
+       
     }
     
     @Test
