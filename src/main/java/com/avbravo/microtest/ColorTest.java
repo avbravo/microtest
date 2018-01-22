@@ -79,6 +79,7 @@ public class ColorTest {
             if (colorList.isEmpty()) {
                unitView.message("no hay colores en en findAll()");
             } else {
+                  unitView.message("ejecutare un  colorRepositoryfindAll()");
                unitView.tableHeader(Arrays.asList(new RowView("idcolor"), new RowView("activo")));
                 for (Color c : colorRepository.findAll()) {
                     unitView.tableCol(Arrays.asList(new ColView(c.getIdcolor()), new ColView(c.getActivo())));
