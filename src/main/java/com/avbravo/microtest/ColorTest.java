@@ -68,15 +68,16 @@ public class ColorTest {
             /*
             Dibuja la interfaz
             */
-            unitView.h1("Registros de colores");
+         
             unitView.form();
+               unitView.formTitle("Registros de colores");
             unitView.panel();
             unitView.panelRow();
             unitView.panelAdd(Arrays.asList(new InputText("idcolor", color.getIdcolor()), 
                     new InputText("activo", color.getActivo())));
             unitView.panelRowClose();
             unitView.panelClose();
-            unitView.button("Save");
+            unitView.buttonGreen("Save");
             unitView.formClose();
             if(save){
                 unitView.message("se guardo exitosamente");
@@ -100,7 +101,7 @@ public class ColorTest {
             if (colorList.isEmpty()) {
                unitView.message("no hay colores en en findAll()");
             } else {
-                  unitView.h2("ejecutare un  colorRepositoryfindAll()");
+                  unitView.formTitle("ejecutare un  colorRepositoryfindAll()");
                unitView.tableHeader(Arrays.asList(new RowView("idcolor"), new RowView("activo")));
                colorRepository.findAll().forEach((c) -> {
                    unitView.tableCol(Arrays.asList(new ColView(c.getIdcolor()), new ColView(c.getActivo())));
