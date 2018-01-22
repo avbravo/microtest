@@ -48,6 +48,8 @@ public class ColorTest {
         unitTest.start(ColorTest.class);
         unitView.start(ColorTest.class);
         save();
+        panelSelectOneMenu();
+        panelDataTable();
         findAll();
         failure();
         selectOneMenu();
@@ -78,19 +80,115 @@ public class ColorTest {
 
             unitView.panelAddInputText(Arrays.asList(new InputText("idcolor", color.getIdcolor()),
                     new InputText("activo", color.getActivo())));
-            
-            //-----------------------------
-              List<Color> colorList = colorRepository.findAll();
-            List<Item> itemList = new ArrayList<>();
-            for(Color c:colorList){
-                Item item = new Item(c.getIdcolor(), c.getIdcolor(), c.getIdcolor());
-              itemList.add(item);
-            }
-            unitView.panelAddSelectOneMenu(                                      
-                    Arrays.asList(new SelectOneMenu("color", itemList)));
-            
-            //------------------
 
+           
+            unitView.panelClose();
+            unitView.buttonGreen("Save");
+            unitView.formClose();
+            if (save) {
+                unitView.message("se guardo exitosamente");
+            } else {
+                unitView.error("No se pudo guardar");
+            }
+
+        } catch (Exception e) {
+            System.out.println("save() " + e.getLocalizedMessage());
+        }
+
+        return "";
+    }
+    @Test
+    public String panelSelectOneMenu() {
+        try {
+//            unitView.message("Testeando save()");
+//Mock
+            Color color = new Color();
+            color.setActivo("si");
+            color.setAutoincrementable(15);
+            color.setIdcolor("rojo");
+            List<UserInfo> list = new ArrayList<>();
+            color.setUserInfo(list);
+            Boolean expResult = true;
+            Boolean save = unitTest.assertEquals("panelSelectOneMenu", true, colorRepository.save(color));
+
+            /*
+            Dibuja la interfaz
+             */
+            unitView.form();
+            unitView.formTitle("panelSelectOneMenu()");
+            unitView.panel();
+
+            unitView.panelAddInputText(Arrays.asList(new InputText("idcolor", color.getIdcolor()),
+                    new InputText("activo", color.getActivo())));
+
+            //-----------------------------
+            List<Color> colorList = colorRepository.findAll();
+            List<Item> itemList = new ArrayList<>();
+            for (Color c : colorList) {
+                Item item = new Item(c.getIdcolor(), c.getIdcolor(), c.getIdcolor());
+                itemList.add(item);
+            }
+            unitView.panelAddSelectOneMenu(
+                    Arrays.asList(new SelectOneMenu("color", itemList)));
+
+            //------------------
+            unitView.panelClose();
+            unitView.buttonGreen("Save");
+            unitView.formClose();
+            if (save) {
+                unitView.message("se guardo exitosamente");
+            } else {
+                unitView.error("No se pudo guardar");
+            }
+
+        } catch (Exception e) {
+            System.out.println("save() " + e.getLocalizedMessage());
+        }
+
+        return "";
+    }
+    @Test
+    public String panelDataTable() {
+        try {
+//            unitView.message("Testeando save()");
+//Mock
+            Color color = new Color();
+            color.setActivo("si");
+            color.setAutoincrementable(15);
+            color.setIdcolor("rojo");
+            List<UserInfo> list = new ArrayList<>();
+            color.setUserInfo(list);
+            Boolean expResult = true;
+            Boolean save = unitTest.assertEquals("panelDataTable", true, colorRepository.save(color));
+
+            /*
+            Dibuja la interfaz
+             */
+            unitView.form();
+            unitView.formTitle("panelDataTable()");
+            unitView.panel();
+
+            unitView.panelAddInputText(Arrays.asList(new InputText("idcolor", color.getIdcolor()),
+                    new InputText("activo", color.getActivo())));
+
+            //-----------------------------
+            List<Color> colorList = colorRepository.findAll();
+            List<Item> itemList = new ArrayList<>();
+            for (Color c : colorList) {
+                Item item = new Item(c.getIdcolor(), c.getIdcolor(), c.getIdcolor());
+                itemList.add(item);
+            }
+            unitView.panelAddSelectOneMenu(
+                    Arrays.asList(new SelectOneMenu("color", itemList)));
+
+            //------------------
+            
+               unitView.panelAddTableHeader("colores",Arrays.asList(new RowView("idcolor"), new RowView("activo")));
+                colorRepository.findAll().forEach((c) -> {
+                    unitView.panelAddTableCol(Arrays.asList(new ColView(c.getIdcolor()), new ColView(c.getActivo())));
+                });
+                unitView.panelAddTableClose();
+                
             unitView.panelClose();
             unitView.buttonGreen("Save");
             unitView.formClose();
@@ -107,6 +205,10 @@ public class ColorTest {
         return "";
     }
 
+    
+    
+    
+    
     @Test
     public String findAll() {
         try {
@@ -115,7 +217,7 @@ public class ColorTest {
             if (colorList.isEmpty()) {
                 unitView.message("no hay colores en en findAll()");
             } else {
-                unitView.formTitle("ejecutare un  colorRepositoryfindAll()");
+                unitView.formTitle("findAll()");
                 unitView.tableHeader(Arrays.asList(new RowView("idcolor"), new RowView("activo")));
                 colorRepository.findAll().forEach((c) -> {
                     unitView.tableCol(Arrays.asList(new ColView(c.getIdcolor()), new ColView(c.getActivo())));
@@ -130,33 +232,34 @@ public class ColorTest {
         }
         return "";
     }
+
     @Test
     public String selectOneMenu() {
         try {
-             List<Color> colorList = colorRepository.findAll();
+            List<Color> colorList = colorRepository.findAll();
             if (colorList.isEmpty()) {
                 unitView.message("no hay colores en en findAll()");
             } else {
             }
-            
+
             //titulo de la tabla
-              /*
+            /*
             Dibuja la interfaz
              */
             unitView.form();
             unitView.formTitle("SelectOneMenu");
             unitView.panel();
             List<Item> itemList = new ArrayList<>();
-            for(Color c:colorList){
+            for (Color c : colorList) {
                 Item item = new Item(c.getIdcolor(), c.getIdcolor(), c.getIdcolor());
-              itemList.add(item);
+                itemList.add(item);
             }
-            unitView.panelAddSelectOneMenu(                                      
+            unitView.panelAddSelectOneMenu(
                     Arrays.asList(new SelectOneMenu("color", itemList)));
             unitView.panelClose();
-            
+
             unitView.formClose();
-           
+
         } catch (Exception e) {
             System.out.println("findAll() " + e.getLocalizedMessage());
         }
