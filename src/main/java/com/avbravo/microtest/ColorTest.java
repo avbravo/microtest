@@ -9,8 +9,9 @@ import com.avbravo.ejbjmoordb.pojos.UserInfo;
 import com.avbravo.ejbspard.entity.Color;
 import com.avbravo.ejbspard.repository.ColorRepository;
 import com.avbravo.jmoordbunit.anotation.Test;
-import com.avbravo.jmoordbunit.pojos.ColView;
-import com.avbravo.jmoordbunit.pojos.RowView;
+import com.avbravo.jmoordbunit.datatable.ColView;
+import com.avbravo.jmoordbunit.datatable.RowView;
+import com.avbravo.jmoordbunit.htmlcomponents.InputText;
 import com.avbravo.jmoordbunit.test.UnitTest;
 import com.avbravo.jmoordbunit.view.UnitView;
 import java.util.ArrayList;
@@ -58,11 +59,31 @@ public class ColorTest {
             Color color = new Color();
             color.setActivo("si");
             color.setAutoincrementable(15);
-            color.setIdcolor("elsa");
+            color.setIdcolor("rojo");
             List<UserInfo> list = new ArrayList<>();
             color.setUserInfo(list);
             Boolean expResult = true;
-            unitTest.assertEquals("save", true, colorRepository.save(color));
+       Boolean save=     unitTest.assertEquals("save", true, colorRepository.save(color));
+            
+            /*
+            Dibuja la interfaz
+            */
+            unitView.h1("Registros de colores");
+            unitView.form();
+            unitView.panel();
+            unitView.panelRow();
+            unitView.panelAdd(Arrays.asList(new InputText("idcolor", color.getIdcolor()), 
+                    new InputText("activo", color.getActivo())));
+            unitView.panelRowClose();
+            unitView.panelClose();
+            unitView.button("Save");
+            unitView.formClose();
+            if(save){
+                unitView.message("se guardo exitosamente");
+            }else{
+                unitView.error("No se pudo guardar");
+            }
+            
 
         } catch (Exception e) {
             System.out.println("save() " + e.getLocalizedMessage());
@@ -79,12 +100,12 @@ public class ColorTest {
             if (colorList.isEmpty()) {
                unitView.message("no hay colores en en findAll()");
             } else {
-                  unitView.message("ejecutare un  colorRepositoryfindAll()");
+                  unitView.h2("ejecutare un  colorRepositoryfindAll()");
                unitView.tableHeader(Arrays.asList(new RowView("idcolor"), new RowView("activo")));
-                for (Color c : colorRepository.findAll()) {
-                    unitView.tableCol(Arrays.asList(new ColView(c.getIdcolor()), new ColView(c.getActivo())));
-                 System.out.println("color: " + c.getIdcolor());
-                }
+               colorRepository.findAll().forEach((c) -> {
+                   unitView.tableCol(Arrays.asList(new ColView(c.getIdcolor()), new ColView(c.getActivo())));
+                   //  System.out.println("color: " + c.getIdcolor());
+                });
                unitView.tableClose();
             }
 

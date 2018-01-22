@@ -36,8 +36,6 @@ UnitTest unitTest;
        unitTest.start(BodegaTest.class);
        findAll();
        
-       unitTest.end(BodegaTest.class);
-        
     }
 
     private void findAll(){
@@ -46,6 +44,6 @@ UnitTest unitTest;
     }
     @PreDestroy
     public void destroy() {
-       
+              unitTest.end(BodegaTest.class);
     }
 }
