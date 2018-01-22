@@ -13,10 +13,10 @@ import com.avbravo.jmoordbunit.datatable.ColView;
 import com.avbravo.jmoordbunit.datatable.RowView;
 import com.avbravo.jmoordbunit.htmlcomponents.InputText;
 import com.avbravo.jmoordbunit.htmlcomponents.Item;
+import com.avbravo.jmoordbunit.htmlcomponents.Radio;
 import com.avbravo.jmoordbunit.htmlcomponents.SelectOneMenu;
 import com.avbravo.jmoordbunit.test.UnitTest;
 import com.avbravo.jmoordbunit.view.UnitView;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +53,7 @@ public class ColorTest {
         findAll();
         failure();
         selectOneMenu();
+        radio();
         unitTest.skipper("delete()");
         unitTest.end(ColorTest.class);
     }
@@ -224,6 +225,37 @@ public class ColorTest {
                     //  System.out.println("color: " + c.getIdcolor());
                 });
                 unitView.tableClose();
+            }
+
+            unitTest.assertEquals("findAll", 1, colorList.size());
+        } catch (Exception e) {
+            System.out.println("findAll() " + e.getLocalizedMessage());
+        }
+        return "";
+    }
+    @Test
+    public String radio() {
+        try {
+            //titulo de la tabla
+            List<Color> colorList = colorRepository.findAll();
+            if (colorList.isEmpty()) {
+                unitView.message("no hay colores en en findAll()");
+            } else {
+                
+                unitView.form();
+            unitView.formTitle("Radio");
+            unitView.panel();
+
+       unitView.panelAddRadio(Arrays.asList(new Radio("sexo", 
+               Arrays.asList(new Item("sexo", "Masculino", "Masculino"),
+                             new Item("sexo","Femenino","Femenino")))));
+                    
+
+           
+            unitView.panelClose();
+            unitView.formClose();
+            
+              
             }
 
             unitTest.assertEquals("findAll", 1, colorList.size());
