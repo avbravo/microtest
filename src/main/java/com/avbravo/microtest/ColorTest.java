@@ -11,6 +11,7 @@ import com.avbravo.ejbspard.repository.ColorRepository;
 import com.avbravo.jmoordbunit.anotation.Test;
 import com.avbravo.jmoordbunit.datatable.ColView;
 import com.avbravo.jmoordbunit.datatable.RowView;
+import com.avbravo.jmoordbunit.htmlcomponents.Checkbox;
 import com.avbravo.jmoordbunit.htmlcomponents.InputText;
 import com.avbravo.jmoordbunit.htmlcomponents.Item;
 import com.avbravo.jmoordbunit.htmlcomponents.Radio;
@@ -51,9 +52,10 @@ public class ColorTest {
         panelSelectOneMenu();
         panelDataTable();
         findAll();
-        failure();
+      failure();
         selectOneMenu();
         radio();
+        checkbox();
         unitTest.skipper("delete()");
         unitTest.end(ColorTest.class);
     }
@@ -82,14 +84,13 @@ public class ColorTest {
             unitView.panelAddInputText(Arrays.asList(new InputText("idcolor", color.getIdcolor()),
                     new InputText("activo", color.getActivo())));
 
-           
             unitView.panelClose();
             unitView.buttonGreen("Save");
             unitView.formClose();
             if (save) {
                 unitView.message("se guardo exitosamente");
             } else {
-                unitView.error("No se pudo guardar");
+                unitView.errorMessage("No se pudo guardar");
             }
 
         } catch (Exception e) {
@@ -98,6 +99,7 @@ public class ColorTest {
 
         return "";
     }
+
     @Test
     public String panelSelectOneMenu() {
         try {
@@ -134,12 +136,13 @@ public class ColorTest {
 
             //------------------
             unitView.panelClose();
+            
             unitView.buttonGreen("Save");
             unitView.formClose();
             if (save) {
                 unitView.message("se guardo exitosamente");
             } else {
-                unitView.error("No se pudo guardar");
+                unitView.errorMessage("No se pudo guardar");
             }
 
         } catch (Exception e) {
@@ -148,6 +151,7 @@ public class ColorTest {
 
         return "";
     }
+
     @Test
     public String panelDataTable() {
         try {
@@ -183,20 +187,19 @@ public class ColorTest {
                     Arrays.asList(new SelectOneMenu("color", itemList)));
 
             //------------------
-            
-               unitView.panelAddTableHeader("colores",Arrays.asList(new RowView("idcolor"), new RowView("activo")));
-                colorRepository.findAll().forEach((c) -> {
-                    unitView.panelAddTableCol(Arrays.asList(new ColView(c.getIdcolor()), new ColView(c.getActivo())));
-                });
-                unitView.panelAddTableClose();
-                
+            unitView.panelAddTableHeader("colores", Arrays.asList(new RowView("idcolor"), new RowView("activo")));
+            colorRepository.findAll().forEach((c) -> {
+                unitView.panelAddTableCol(Arrays.asList(new ColView(c.getIdcolor()), new ColView(c.getActivo())));
+            });
+            unitView.panelAddTableClose();
+
             unitView.panelClose();
             unitView.buttonGreen("Save");
             unitView.formClose();
             if (save) {
                 unitView.message("se guardo exitosamente");
             } else {
-                unitView.error("No se pudo guardar");
+                unitView.errorMessage("No se pudo guardar");
             }
 
         } catch (Exception e) {
@@ -206,10 +209,6 @@ public class ColorTest {
         return "";
     }
 
-    
-    
-    
-    
     @Test
     public String findAll() {
         try {
@@ -233,6 +232,7 @@ public class ColorTest {
         }
         return "";
     }
+
     @Test
     public String radio() {
         try {
@@ -241,21 +241,46 @@ public class ColorTest {
             if (colorList.isEmpty()) {
                 unitView.message("no hay colores en en findAll()");
             } else {
-                
+
                 unitView.form();
-            unitView.formTitle("Radio");
-            unitView.panel();
+                unitView.formTitle("Radio");
+                unitView.panel();
 
-       unitView.panelAddRadio(Arrays.asList(new Radio("sexo", 
-               Arrays.asList(new Item("sexo", "Masculino", "Masculino"),
-                             new Item("sexo","Femenino","Femenino")))));
-                    
+                unitView.panelAddRadio(Arrays.asList(new Radio("sexo",
+                        Arrays.asList(new Item("sexo", "Masculino", "Masculino"),
+                                new Item("sexo", "Femenino", "Femenino")))));
 
-           
-            unitView.panelClose();
-            unitView.formClose();
-            
-              
+                unitView.panelClose();
+                unitView.formClose();
+
+            }
+
+            unitTest.assertEquals("radio", 1, colorList.size());
+        } catch (Exception e) {
+            System.out.println("findAll() " + e.getLocalizedMessage());
+        }
+        return "";
+    }
+
+    @Test
+    public String checkbox() {
+        try {
+            //titulo de la tabla
+            List<Color> colorList = colorRepository.findAll();
+            if (colorList.isEmpty()) {
+                unitView.message("no hay colores en en findAll()");
+            } else {
+
+                unitView.form();
+                unitView.formTitle("Checkbox");
+                unitView.panel();
+
+                unitView.panelAddCheckbox("sexo", Arrays.asList(new Checkbox("masculino", "Masculino", "Masculino"),
+                        new Checkbox("femenino", "Femenino", "Femenino")));
+
+                unitView.panelClose();
+                unitView.formClose();
+
             }
 
             unitTest.assertEquals("findAll", 1, colorList.size());
