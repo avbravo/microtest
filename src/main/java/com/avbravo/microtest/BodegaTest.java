@@ -26,24 +26,26 @@ import javax.inject.Inject;
 @Test
 @Report(path = "/home/avbravo/Descargas/")
 public class BodegaTest {
-@Inject 
-UnitTest unitTest;
+
+    @Inject
+    UnitTest unitTest;
     @Inject
     BodegaRepository bodegaRepository;
 
     @PostConstruct
     void init() {
-       unitTest.start(BodegaTest.class);
-       findAll();
-       
+        unitTest.start(BodegaTest.class);
+        findAll();
+
     }
 
-    private void findAll(){
-        unitTest.assertNotEquals("findAll",0,bodegaRepository.findAll().size());
-  
+    private void findAll() {
+        unitTest.assertNotEquals("findAll", 0, bodegaRepository.findAll().size());
+
     }
+
     @PreDestroy
     public void destroy() {
-              unitTest.end(BodegaTest.class);
+        unitTest.end(BodegaTest.class);
     }
 }
