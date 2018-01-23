@@ -5,10 +5,14 @@
  */
 package com.avbravo.microtest;
 
+import com.avbravo.ejbjmoordb.pojos.UserInfo;
+import com.avbravo.ejbspard.entity.Bodega;
 import com.avbravo.ejbspard.repository.BodegaRepository;
 import com.avbravo.jmoordbunit.anotation.Report;
 import com.avbravo.jmoordbunit.anotation.Test;
 import com.avbravo.jmoordbunit.test.UnitTest;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.DependsOn;
@@ -36,9 +40,32 @@ public class BodegaTest {
     void init() {
         unitTest.start(BodegaTest.class);
         findAll();
+        save();
 
     }
 
+    @Test
+    private void save() {
+        try {
+            //Mock
+            Bodega bodega = new Bodega();
+            bodega.setIdbodega("bodega-test");
+            bodega.setDireccion("Panama");
+            bodega.setTelefono("(507)");
+            //User info es una clase que usa el framework para guardar referencias
+            //de usuarios
+            List<UserInfo> list = new ArrayList<>();
+            bodega.setUserInfo(list);
+            bodega.setActivo("si");
+            
+            unitTest.assertEquals("save()", true,bodegaRepository.save(bodega));
+        } catch (Exception e) {
+            System.out.println("save() " + e.getLocalizedMessage());
+        }
+
+    }
+
+    @Test
     private void findAll() {
         unitTest.assertNotEquals("findAll", 0, bodegaRepository.findAll().size());
 

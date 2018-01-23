@@ -25,11 +25,16 @@
             <artifactId>ejbspard</artifactId>
             <version>0.2.1.1</version>
         </dependency>
-        <dependency>
+           <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>jmoordbunit</artifactId>
-            <version>${project.version}</version>
+            <version>0.3.1</version>
         </dependency>
+<!--        <dependency>
+            <groupId>com.github.avbravo</groupId>
+            <artifactId>jmoordbunit</artifactId>
+            <version>0.3</version>
+        </dependency>-->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -94,6 +99,10 @@
             <id>PrimeFaces-maven-lib</id>
             <layout>default</layout>
             <name>Repository for library PrimeFaces-maven-lib</name>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 </project>
