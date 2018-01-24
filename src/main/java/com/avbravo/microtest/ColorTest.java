@@ -127,6 +127,57 @@ public class ColorTest {
             //-----------------------------
             List<Color> colorList = colorRepository.findAll();
             List<Item> itemList = new ArrayList<>();
+            colorList.stream().map((c) -> new Item(c.getIdcolor(), c.getIdcolor(), c.getIdcolor())).forEachOrdered((item) -> {
+                itemList.add(item);
+            });
+            unitView.panelAddSelectOneMenu(
+                    Arrays.asList(new SelectOneMenu("color", itemList)));
+
+            //------------------
+            unitView.panelClose();
+            
+            unitView.buttonGreen("Save");
+            unitView.formClose();
+            if (save) {
+                unitView.message("se guardo exitosamente");
+            } else {
+                unitView.errorMessage("No se pudo guardar");
+            }
+
+        } catch (Exception e) {
+            System.out.println("save() " + e.getLocalizedMessage());
+        }
+
+        return "";
+    }
+
+    @Test
+    public String panelSelectOneMenuCompuesto() {
+        try {
+//            unitView.message("Testeando save()");
+//Mock
+            Color color = new Color();
+            color.setActivo("si");
+            color.setAutoincrementable(15);
+            color.setIdcolor("rojo");
+            List<UserInfo> list = new ArrayList<>();
+            color.setUserInfo(list);
+            Boolean expResult = true;
+            Boolean save = unitTest.assertEquals("panelSelectOneMenu", true, colorRepository.save(color));
+
+            /*
+            Dibuja la interfaz
+             */
+            unitView.form();
+            unitView.formTitle("panelSelectOneMenu()");
+            unitView.panel();
+
+            unitView.panelAddInputText(Arrays.asList(new InputText("idcolor", color.getIdcolor()),
+                    new InputText("activo", color.getActivo())));
+
+            //-----------------------------
+            List<Color> colorList = colorRepository.findAll();
+            List<Item> itemList = new ArrayList<>();
             for (Color c : colorList) {
                 Item item = new Item(c.getIdcolor(), c.getIdcolor(), c.getIdcolor());
                 itemList.add(item);
